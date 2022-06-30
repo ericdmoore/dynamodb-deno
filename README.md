@@ -27,6 +27,8 @@ Philosophically I perfer my libraries to not escalate permissions.
 The `chiefbiiko` package is incredible, however, I prefer clarity over convenience. It has some of automagically fetching credentials functions, and I leave those to the user's application. 
 As shown in the [Usage](#Usage) documentation above; it assumes the user can manage their own credentials, but if that it too dificult, users can recreate a similar experience by leveraging the oother `chiefbiiko` package.
 
+There have also been some non-material stylistic changes - since I intend to maintain this fork.
+
 ## API
 
 ### Contents
