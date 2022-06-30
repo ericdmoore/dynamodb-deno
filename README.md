@@ -21,6 +21,11 @@ const dyno = createClient({credentials: grabAwsCreds() });
 const result = await dyno.listTables();
 ```
 
+## Fork Reason
+
+Philosophically I perfer the libraries I use to not escalate permissions. The `chiefbiiko` package is incredible, however, I prefer that the conveniences of automagically fetching credentials to be handled by the user. 
+Thus Usage the documentation, assumes the user can manage their own credentials, and if that it too dificult they can recreate a similar experience by leveraging the oother `chiefbiiko` package.
+
 ## API
 
 ### Contents
