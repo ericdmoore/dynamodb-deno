@@ -1,4 +1,4 @@
-# dynamodb
+# dynamodb-deno
 
 [![local ci][ci_img]](ci_url)
 
