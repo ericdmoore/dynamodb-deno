@@ -23,8 +23,9 @@ const result = await dyno.listTables();
 
 ## Fork Reason
 
-Philosophically I perfer the libraries I use to not escalate permissions. The `chiefbiiko` package is incredible, however, I prefer that the conveniences of automagically fetching credentials to be handled by the user. 
-Thus Usage the documentation, assumes the user can manage their own credentials, and if that it too dificult they can recreate a similar experience by leveraging the oother `chiefbiiko` package.
+Philosophically I perfer my libraries to not escalate permissions. 
+The `chiefbiiko` package is incredible, however, I prefer clarity over convenience. It has some of automagically fetching credentials functions, and I leave those to the user's application. 
+As shown in the [Usage](#Usage) documentation above; it assumes the user can manage their own credentials, but if that it too dificult, users can recreate a similar experience by leveraging the oother `chiefbiiko` package.
 
 ## API
 
@@ -314,7 +315,6 @@ about parameters of a specific operation.
 #### UpdateTimeToLive
 
  ##### [`updateTimeToLive(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTimeToLive.html)
-
 
 ## License
 
