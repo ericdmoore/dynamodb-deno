@@ -1,4 +1,4 @@
-import { encode, decode, hmac } from "../deps.ts";
+import { decode, encode, hmac } from "../deps.ts";
 import { date } from "../util.ts";
 
 /** Some magic bytes. */

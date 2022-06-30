@@ -1,6 +1,6 @@
-import { sha256, encode } from "../deps.ts";
+import { encode, sha256 } from "../deps.ts";
 import { awsSignatureV4 } from "./aws_signature_v4.ts";
-import { Doc, date } from "../util.ts";
+import { date, Doc } from "../util.ts";
 import { ClientConfig } from "../mod.ts";
 
 /** Algorithm identifer. */

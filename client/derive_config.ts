@@ -1,4 +1,4 @@
-import { get } from "../deps.ts";
+// import { get } from "../deps.ts";
 import { ClientConfig } from "../mod.ts";
 import { Doc } from "../util.ts";
 import { createCache } from "./create_cache.ts";
@@ -7,7 +7,7 @@ import { createCache } from "./create_cache.ts";
 function deriveHostEndpoint(
   region: string,
   port = 8000,
-  host = "localhost"
+  host = "localhost",
 ): { host: string; endpoint: string } {
   let _host: string = host;
   let endpoint: string;
@@ -23,36 +23,14 @@ function deriveHostEndpoint(
 }
 
 /** Derives an internal config object from a ClientConfig. */
-export function deriveConfig(conf: ClientConfig = {}): Doc {
+export function deriveConfig(conf: ClientConfig): Doc {
   const _conf: ClientConfig = { ...conf };
 
-  if (
-    _conf.profile ||
-    !_conf.region ||
-    !_conf.credentials ||
-    (typeof _conf.credentials !== "function" &&
-      (!_conf.credentials.accessKeyId || !_conf.credentials.secretAccessKey))
-  ) {
-    const got: Doc = get({ profile: _conf.profile });
-
-    if (typeof _conf.credentials !== "function") {
-      _conf.credentials = {
-        accessKeyId: got.accessKeyId,
-        secretAccessKey: got.secretAccessKey,
-        sessionToken: got.sessionToken,
-        ..._conf.credentials,
-      };
-    }
-
-    _conf.region = got.region;
-
-    if (
-      typeof _conf.credentials !== "function" &&
-      (!_conf.region ||
-        !_conf.credentials.accessKeyId ||
-        !_conf.credentials.secretAccessKey)
-    ) {
-      throw new Error("unable to derive aws config");
+  if (typeof _conf.credentials === "function") {
+    try {
+      _conf.credentials = _conf.credentials();
+    } catch (e) {
+      throw new Error(e);
     }
   }
 

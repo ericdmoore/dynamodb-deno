@@ -6,7 +6,7 @@ import { awsSignatureV4, kdf } from "../client/aws_signature_v4.ts";
 Deno.test({
   name: "aws signature v4 flow",
   fn(): void {
-    const expectedSignature: string =
+    const expectedSignature =
       "31fac5ed29db737fbcafac527470ca6d9283283197c5e6e94ea40ddcec14a9c1";
 
     const key: Uint8Array = kdf(

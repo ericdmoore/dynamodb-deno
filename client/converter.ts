@@ -1,6 +1,6 @@
 // import DynamoDB = require('../../clients/dynamodb');
-import { base64ToUint8Array, base64FromUint8Array } from "../deps.ts";
-import { Doc, DynamoDBSet, DynamoDBNumberValue, typeOf } from "../util.ts";
+import { base64FromUint8Array, base64ToUint8Array } from "../deps.ts";
+import { Doc, DynamoDBNumberValue, DynamoDBSet, typeOf } from "../util.ts";
 
 /** Formats a list. */
 function formatList(data: any[], options: Doc = {}): Doc {

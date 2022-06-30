@@ -1,9 +1,9 @@
-import { base64ToUint8Array, base64FromUint8Array } from "../deps.ts";
+import { base64FromUint8Array, base64ToUint8Array } from "../deps.ts";
 import { Collection } from "./collection.ts";
 // import { Doc } from "../types.ts"
 import {
-  Doc,
   date,
+  Doc,
   memoizedProperty as utilMemoizedProperty,
   property as utilProperty,
 } from "../util.ts";

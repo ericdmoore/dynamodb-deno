@@ -1,5 +1,5 @@
 import { baseOp, deriveConfig } from "./client/mod.ts";
-import { Doc, camelCase } from "./util.ts";
+import { camelCase, Doc } from "./util.ts";
 
 /** Convenience export. */
 export type { Doc } from "./util.ts";
@@ -29,7 +29,7 @@ export interface Credentials {
 
 /** Client configuration. */
 export interface ClientConfig {
-  credentials?: Credentials | (() => Credentials | Promise<Credentials>);
+  credentials: Credentials | (() => Credentials);
   region?: string; // us-west-2
   profile?: string; // default
   canonicalUri?: string; // fx /path/to/somewhere
@@ -78,7 +78,7 @@ export const OPS: Set<string> = new Set<string>([
 ]);
 
 /** Creates a DynamoDB client. */
-export function createClient(conf?: ClientConfig): DynamoDBClient {
+export function createClient(conf: ClientConfig): DynamoDBClient {
   const _conf: Doc = deriveConfig(conf);
 
   const dyno: DynamoDBClient = {} as DynamoDBClient;

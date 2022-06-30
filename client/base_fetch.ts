@@ -1,5 +1,5 @@
 import { encode } from "../deps.ts";
-import { HeadersConfig, createHeaders } from "./create_headers.ts";
+import { createHeaders, HeadersConfig } from "./create_headers.ts";
 import { Doc } from "../util.ts";
 
 /** Base fetch. */
