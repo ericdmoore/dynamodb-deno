@@ -7,7 +7,7 @@ DynamoDB client that loves Deno - forked from chiefbiiko
 ## Usage
 
 ```ts
-import { createClient } from "https://denopkg.com/ericdmoore/dynamodb/mod.ts";
+import { createClient } from "https://denopkg.com/ericdmoore/dynamodb-deno/mod.ts";
 
 // config/credentials WILL NOT BE READ from the env/fs
 // you MUST pass them in
