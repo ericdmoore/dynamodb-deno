@@ -2,7 +2,7 @@
 
 [![local ci][ci_img]](ci_url)
 
-DynamoDB client that loves Deno - forked from chiefbiiko
+DynamoDB client that loves Deno - forked from [chiefbiiko](https://github.com/chiefbiiko/dynamodb)
 
 ## Usage
 
