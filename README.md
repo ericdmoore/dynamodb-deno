@@ -157,7 +157,7 @@ export interface OpOptions {
 
 #### createClient
 
-##### `createClient(conf: ClientConfig): DynamoDBClient`
+ ##### [`createClient(conf: ClientConfig): DynamoDBClient`
 
 Creates a DynamoDB client.
 
@@ -200,181 +200,120 @@ about parameters of a specific operation.
 
 #### DescribeBackup
 
-##### [`describeBackup(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeBackup.html)
+ ##### [`describeBackup(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeBackup.html)
 
 #### DescribeContinuousBackups
 
-##### [`describeContinuousBackups(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeContinuousBackups.html)
+ ##### [`describeContinuousBackups(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeContinuousBackups.html)
 
 #### DescribeEndpoints
 
-##### `describeEndpoints(options?: OpOptions): Promise<Doc>`
-
-[aws DescribeEndpoints docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeEndpoints.html)
+ ##### [`describeEndpoints(options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeEndpoints.html)
 
 #### DescribeGlobalTable
 
-##### `describeGlobalTable(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DescribeGlobalTable docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeGlobalTable.html)
+ ##### [`describeGlobalTable(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeGlobalTable.html)
 
 #### DescribeGlobalTableSettings
 
-##### `describeGlobalTableSettings(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DescribeGlobalTableSettings docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeGlobalTableSettings.html)
+ ##### [`describeGlobalTableSettings(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeGlobalTableSettings.html)
 
 #### DescribeLimits
 
-##### `describeLimits(options?: OpOptions): Promise<Doc>`
-
-[aws DescribeLimits docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeLimits.html)
+ ##### [`describeLimits(options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeLimits.html)
 
 #### DescribeTable
 
-##### `describeTable(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DescribeTable docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html)
+ ##### [`describeTable(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html)
 
 #### DescribeTimeToLive
 
-##### `describeTimeToLive(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DescribeTimeToLive docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTimeToLive.html)
+ ##### [`describeTimeToLive(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTimeToLive.html)
 
 #### GetItem
 
-##### `getItem(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws GetItem docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html)
+ ##### [`getItem(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html)
 
 #### ListBackups
 
-##### `listBackups(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws ListBackups docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListBackups.html)
+ ##### [`listBackups(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListBackups.html)
 
 #### ListGlobalTables
 
-##### `listGlobalTables(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws ListGlobalTables docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListGlobalTables.html)
+ ##### [`listGlobalTables(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListGlobalTables.html)
 
 #### ListTables
 
-##### `listTables(options?: OpOptions): Promise<Doc>`
-
-[aws ListTables docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListTables.html)
+ ##### [`listTables(options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListTables.html)
 
 #### ListTagsOfResource
 
-##### `listTagsOfResource(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws ListTagsOfResource docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListTagsOfResource.html)
+ ##### [`listTagsOfResource(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListTagsOfResource.html)
 
 #### PutItem
 
-##### `putItem(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws PutItem docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html)
+ ##### [`putItem(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html)
 
 #### Query
 
-##### `query(params: Doc, options?: OpOptions): Promise<Doc | AsyncIterableIterator<Doc>>`
-
-[aws Query docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
+ ##### [`query(params: Doc, options?: OpOptions): Promise<Doc | AsyncIterableIterator<Doc>>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
 
 #### RestoreTableFromBackup
 
-##### `restoreTableFromBackup(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws RestoreTableFromBackup docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_RestoreTableFromBackup.html)
+ ##### [`restoreTableFromBackup(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_RestoreTableFromBackup.html)
 
 #### RestoreTableToPointInTime
 
-##### `restoreTableToPointInTime(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws RestoreTableToPointInTime docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_RestoreTableToPointInTime.html)
+ ##### [`restoreTableToPointInTime(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_RestoreTableToPointInTime.html)
 
 #### Scan
 
-##### `scan(params: Doc, options?: OpOptions): Promise<Doc | AsyncIterableIterator<Doc>>`
-
-[aws Scan docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html)
+ ##### [`scan(params: Doc, options?: OpOptions): Promise<Doc | AsyncIterableIterator<Doc>>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html)
 
 #### TagResource
 
-##### `tagResource(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws TagResource docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TagResource.html)
+ ##### [`tagResource(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TagResource.html)
 
 #### TransactGetItems
 
-##### `transactGetItems(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws TransactGetItems docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TransactGetItems.html)
+ ##### [`transactGetItems(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TransactGetItems.html)
 
 #### TransactWriteItems
 
-##### `transactWriteItems(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws TransactWriteItems docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TransactWriteItems.html)
+ ##### [`transactWriteItems(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TransactWriteItems.html)
 
 #### UntagResource
 
-##### `untagResource(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws UntagResource docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UntagResource.html)
+ ##### [`untagResource(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UntagResource.html)
 
 #### UpdateContinuousBackups
 
-##### `updateContinuousBackups(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws UpdateContinuousBackups docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateContinuousBackups.html)
+ ##### [`updateContinuousBackups(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateContinuousBackups.html)
 
 #### UpdateGlobalTable
 
-##### `updateGlobalTable(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws UpdateGlobalTable docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateGlobalTable.html)
+ ##### [`updateGlobalTable(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateGlobalTable.html)
 
 #### UpdateGlobalTableSettings
 
-##### `updateGlobalTableSettings(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws UpdateGlobalTableSettings docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateGlobalTableSettings.html)
+ ##### [`updateGlobalTableSettings(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateGlobalTableSettings.html)
 
 #### UpdateItem
 
-##### `updateItem(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws UpdateItem docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
+ ##### [`updateItem(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
 
 #### UpdateTable
 
-##### `updateTable(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws UpdateTable docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html)
+ ##### [`updateTable(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html)
 
 #### UpdateTimeToLive
 
-##### `updateTimeToLive(params: Doc, options?: OpOptions): Promise<Doc>`
+ ##### [`updateTimeToLive(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTimeToLive.html)
 
-[aws UpdateTimeToLive docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTimeToLive.html)
-
-## FYI
-
-Don't want to do all development against the real AWS cloud?
-
-- [DynamoDB Local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
-
-- [DynamoDB GUI](https://github.com/Arattian/DynamoDb-GUI-Client)
 
 ## License
 
 [MIT](./LICENSE)
-
-
 
 [ci_url]:https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml
 [ci_img]:https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml/badge.svg?branch=master
