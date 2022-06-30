@@ -1,27 +1,25 @@
 # dynamodb
 
-![ci](https://github.com/chiefbiiko/dynamodb/workflows/ci/badge.svg?branch=master)
+[![local ci][ci_img]](ci_url)
 
-DynamoDB client.
+DynamoDB client that loves Deno - forked from chiefbiiko
 
 ## Usage
 
 ```ts
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { createClient } from "https://denopkg.com/ericdmoore/dynamodb/mod.ts";
 
-// if config/credentials not passed they will be read from the env/fs
-const dyno = createClient();
+// config/credentials WILL NOT BE READ from the env/fs
+// you MUST pass them in
+// you can OPTIONALLY use chiefbiiko's other pkg to handle that if you like
+//
+// import { get as grabAwsCreds } from "https://denopkg.com/chiefbiiko/get-aws-config/mod.ts";
+
+const dyno = createClient({credentials: grabAwsCreds() });
 
 // the client has all of DynamoDB's operations as camelCased async methods
 const result = await dyno.listTables();
 ```
-
-The client config can be omitted entirely when calling `createClient`. If that
-is the case the config will be derived from the environment and filesystem, in
-that order, using
-[`get-aws-config`](https://github.com/chiefbiiko/get-aws-config).
-
-Prefer using temporary credentials and a session token.
 
 ## API
 
@@ -170,63 +168,43 @@ about parameters of a specific operation.
 
 #### BatchGetItem
 
-##### `batchGetItem(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws BatchGetItem docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html)
+##### [`batchGetItem(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html)
 
 #### BatchWriteItem
 
-##### `batchWriteItem(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws BatchWriteItem docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html)
+##### [`batchWriteItem(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html)
 
 #### CreateBackup
 
-##### `createBackup(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws CreateBackup docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateBackup.html)
+##### [`createBackup(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateBackup.html)
 
 #### CreateGlobalTable
 
-##### `createGlobalTable(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws CreateGlobalTable docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateGlobalTable.html)
+##### [`createGlobalTable(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateGlobalTable.html)
 
 #### CreateTable
 
-##### `createTable(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws CreateTable docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateTable.html)
+##### [`createTable(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateTable.html)
 
 #### DeleteBackup
 
-##### `deleteBackup(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DeleteBackup docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteBackup.html)
+##### [`deleteBackup(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteBackup.html)
 
 #### DeleteItem
 
-##### `deleteItem(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DeleteItem docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html)
+##### [`deleteItem(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html)
 
 #### DeleteTable
 
-##### `deleteTable(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DeleteTable docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteTable.html)
+##### [`deleteTable(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteTable.html)
 
 #### DescribeBackup
 
-##### `describeBackup(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DescribeBackup docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeBackup.html)
+##### [`describeBackup(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeBackup.html)
 
 #### DescribeContinuousBackups
 
-##### `describeContinuousBackups(params: Doc, options?: OpOptions): Promise<Doc>`
-
-[aws DescribeContinuousBackups docs](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeContinuousBackups.html)
+##### [`describeContinuousBackups(params: Doc, options?: OpOptions): Promise<Doc>`](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeContinuousBackups.html)
 
 #### DescribeEndpoints
 
@@ -395,3 +373,8 @@ Don't want to do all development against the real AWS cloud?
 ## License
 
 [MIT](./LICENSE)
+
+
+
+[ci_url]:https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml
+[ci_img]:https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml/badge.svg?branch=master
