@@ -5,17 +5,7 @@ on:
   - pull_request
 
 jobs:
-  test_signv4:
-    name: test dynamodb signature v4
-    runs-on: ubuntu-latest
-    steps:
-      - name: clone repo
-        uses: actions/checkout@v2.1.0
-      - name: install deno
-        uses: denolib/setup-deno@master
-      - name: run tests
-        run: deno run --allow-env ./test/signv4.ts
-  test_local:
+  tests:
     name: test dynamodb local
     runs-on: ubuntu-latest
     steps:
@@ -24,8 +14,8 @@ jobs:
       - name: install deno
         uses: denolib/setup-deno@master
       - name: start a local dynamodb
-        run: curl -fsSL https://denopkg.com/chiefbiiko/dynamodb@v0.2.0/start_db.sh | bash
+        run: make local_dl
       - name: sleep 2 allow db startup
         run: sleep 4.19
       - name: run tests
-        run: deno test --allow-env --allow-net ./test/signv4.ts ./test/local.ts
+        run: make tests
