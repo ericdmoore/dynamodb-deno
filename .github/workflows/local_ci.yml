@@ -14,8 +14,9 @@ jobs:
       - name: install deno
         uses: denolib/setup-deno@master
       - name: start a local dynamodb
-        run: make local_dl
+        run: curl -fsSL https://denopkg.com/chiefbiiko/dynamodb@v0.2.0/start_db.sh | bash
+        # run: make local_dl
       - name: sleep 2 allow db startup
-        run: sleep 4.19
+        run: sleep 5.0
       - name: run tests
         run: make tests
