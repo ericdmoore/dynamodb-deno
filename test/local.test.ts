@@ -44,7 +44,7 @@ const exec = async (
   const p = Deno.run({
     cmd: ["bash"],
     stdin: "piped",
-    stdout: "piped", 
+    stdout: "piped",
     // gid:opts?.gid,
     // uid: opts?.uid
   });
@@ -61,23 +61,22 @@ const exec = async (
 Deno.test("Using The Local Dynamo DB Service", async (setup) => {
   await setup.step({
     ignore: true,
-    name: "Setup A. Ensure Local DB Resoruces on FS", 
+    name: "Setup A. Ensure Local DB Resoruces on FS",
     fn: async () => {
       const p = await Deno.run({ cmd: ["make", "local_dl"] });
       p.close();
-    }
+    },
   });
 
   await setup.step({
-    name: "Setup B. Start local server", 
+    name: "Setup B. Start local server",
     // ignore: true,
     fn: async (t) => {
-
       // exec('make local_run')
       // const dbProcess = await Deno.run({ cmd: ["make", "local_run"] });
       // console.log(`local server running on process: ${dbProcess.pid}`);
       // await sleep(4500);
-      
+
       console.log(`continuting...`);
 
       await t.step("Setup C. Ensure Tables", async () => {
@@ -357,8 +356,8 @@ Deno.test("Using The Local Dynamo DB Service", async (setup) => {
           assertEquals(result.Item.caliber, caliber); // still caliber 223
         },
       });
-    }
-  })
+    },
+  });
 
   await setup.step({
     // ignore: true,

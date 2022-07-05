@@ -4,10 +4,10 @@ import { date, Doc } from "../util.ts";
 import { ClientConfig } from "../mod.ts";
 
 /** Algorithm identifer. */
-const ALGORITHM: string = "AWS4-HMAC-SHA256";
+const ALGORITHM = "AWS4-HMAC-SHA256";
 
 /** Content type header value for POST requests. */
-const CONTENT_TYPE: string = "application/x-amz-json-1.0";
+const CONTENT_TYPE = "application/x-amz-json-1.0";
 
 /** Required configuration for assembling headers. */
 export interface HeadersConfig extends ClientConfig {
@@ -22,47 +22,45 @@ export async function createHeaders(
   op: string,
   payload: Uint8Array,
   conf: HeadersConfig,
-  refreshCredentials: boolean = !conf.cache.signingKey,
+  refreshCredentials = !conf.cache.signingKey,
 ): Promise<Headers> {
   if (refreshCredentials) {
     await conf.cache.refresh();
   }
 
-  const amzTarget: string = `DynamoDB_20120810.${op}`;
-
+  const amzTarget = `DynamoDB_20120810.${op}`;
   const amzDate: string = date.format(conf.date || new Date(), "amz");
+  const canonicalUri = conf.canonicalUri || "/";
+  const canonicalHeaders = `content-type:${CONTENT_TYPE}\n` +
+    `host:${conf.host}\n` +
+    `x-amz-date:${amzDate}\n` +
+    `x-amz-target:${amzTarget}\n`;
 
-  const canonicalUri: string = conf.canonicalUri || "/";
-
-  const canonicalHeaders: string =
-    `content-type:${CONTENT_TYPE}\nhost:${conf.host}\nx-amz-date:${amzDate}\nx-amz-target:${amzTarget}\n`;
-
-  const signedHeaders: string = "content-type;host;x-amz-date;x-amz-target";
-
+  const signedHeaders = "content-type;host;x-amz-date;x-amz-target";
   const payloadHash: string = sha256(payload, undefined, "hex") as string;
+  const canonicalRequest = `${conf.method}\n${canonicalUri}\n\n` +
+    `${canonicalHeaders}` +
+    `\n${signedHeaders}` +
+    `\n${payloadHash}`;
 
-  const canonicalRequest: string =
-    `${conf.method}\n${canonicalUri}\n\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
-
-  const canonicalRequestDigest: string = sha256(
+  const canonicalRequestDigest = sha256(
     canonicalRequest,
     "utf8",
     "hex",
   ) as string;
-
   const msg: Uint8Array = encode(
     `${ALGORITHM}\n${amzDate}\n${conf.cache.credentialScope}\n${canonicalRequestDigest}`,
     "utf8",
   );
-
   const signature: string = awsSignatureV4(
     conf.cache.signingKey,
     msg,
     "hex",
   ) as string;
 
-  const authorizationHeader: string =
-    `${ALGORITHM} Credential=${conf.cache.accessKeyId}/${conf.cache.credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+  const authorizationHeader =
+    `${ALGORITHM} Credential=${conf.cache.accessKeyId}/${conf.cache.credentialScope}, ` +
+    `SignedHeaders=${signedHeaders}, Signature=${signature}`;
 
   const headers: Headers = new Headers({
     "Content-Type": CONTENT_TYPE,
