@@ -32,6 +32,8 @@ it assumes the user can manage their own credentials, but if that it too
 dificult, users can recreate a similar experience by leveraging the oother
 `chiefbiiko` package.
 
+There have also been some non-material stylistic changes - since I intend to maintain this fork.
+
 ## API
 
 ### Contents
@@ -325,5 +327,5 @@ about parameters of a specific operation.
 
 [MIT](./LICENSE)
 
-[ci_url]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml
-[ci_img]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml/badge.svg?branch=master
+[ci_url]:https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml
+[ci_img]:https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml/badge.svg?branch=master
