@@ -1,2 +1,4 @@
 # dynamodb_local_latest*
 shared-local-instance.db*
+.coverage
+cov_profile

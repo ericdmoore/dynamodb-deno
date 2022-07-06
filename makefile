@@ -20,3 +20,13 @@ local_db_stop:
 
 wait5:
 	sleep 5.1
+
+coverage_tests:
+	deno test --allow-run --allow-net --coverage=./.coverage
+
+coverage_ci: coverage_tests
+	deno coverage .coverage/ --lcov --output=.coverage/_deno.lcov;
+
+coverage: local_db_start wait5 coverage_tests coverage_ci
+	genhtml -o cov_profile/html .coverage/_deno.lcov;
+	open cov_profile/html/index.html

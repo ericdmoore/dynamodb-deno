@@ -27,7 +27,7 @@ export function kdf(
   }
 
   if (typeof dateStamp !== "string") {
-    dateStamp = date.format(dateStamp, "dateStamp");
+    dateStamp = date.format(dateStamp, "dateStamp") as string;
   } else if (!date.DATE_STAMP_REGEX.test(dateStamp)) {
     throw new TypeError("date stamp format must be yyyymmdd");
   }
@@ -45,10 +45,7 @@ export function kdf(
   ) as Uint8Array;
 
   mac = hmac("sha256", mac, region, "utf8") as Uint8Array;
-
   mac = hmac("sha256", mac, service, "utf8") as Uint8Array;
-
   mac = hmac("sha256", mac, "aws4_request", "utf8") as Uint8Array;
-
   return outputEncoding ? decode(mac, outputEncoding) : mac;
 }

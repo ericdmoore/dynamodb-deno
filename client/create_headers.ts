@@ -29,7 +29,7 @@ export async function createHeaders(
   }
 
   const amzTarget = `DynamoDB_20120810.${op}`;
-  const amzDate: string = date.format(conf.date || new Date(), "amz");
+  const amzDate = date.format(conf.date || new Date(), "amz") as string;
   const canonicalUri = conf.canonicalUri || "/";
   const canonicalHeaders = `content-type:${CONTENT_TYPE}\n` +
     `host:${conf.host}\n` +

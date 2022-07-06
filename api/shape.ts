@@ -6,6 +6,7 @@ import {
   Doc,
   memoizedProperty as utilMemoizedProperty,
   property as utilProperty,
+  type FormatterOptions
 } from "../util.ts";
 
 const _Collection: any = Collection;
@@ -434,8 +435,8 @@ function TimestampShape(this: any, shape: Doc) {
     //   : null;
   };
 
-  this.toWireFormat = function (value: any): string {
-    return date.format(value, self.timestampFormat);
+  this.toWireFormat = function (value: Date): string | number {
+    return date.format(value, self.timestampFormat as FormatterOptions);
   };
 }
 

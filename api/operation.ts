@@ -1,9 +1,10 @@
-// var Shape = require('./shape');
 import { Shape } from "./shape.ts";
+import { Doc, memoizedProperty, property } from "../util.ts";
+
+// var Shape = require('./shape');
 // var util = require('../util');
 // var property = util.property;
 // var memoizedProperty = util.memoizedProperty;
-import { Doc, memoizedProperty, property } from "../util.ts";
 // import { Doc} from "../types.ts"
 
 export function Operation(
