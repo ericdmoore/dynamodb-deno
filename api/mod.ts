@@ -1,4 +1,4 @@
-import { Api } from "./api.ts";
+import { Api } from './api.ts';
 
 const _Api: any = Api;
 

@@ -122,48 +122,48 @@ maintain this fork.
 ```ts
 /** Generic document. */
 export interface Doc {
-	[key: string]: any;
+    [key: string]: any;
 }
 
 /** Generic representation of a DynamoDB client. */
 export interface DynamoDBClient {
-	describeEndpoints: (options?: Doc) => Promise<Doc>;
-	describeLimits: (options?: Doc) => Promise<Doc>;
-	listTables: (options?: Doc) => Promise<Doc>;
-	scan: (
-		params: Doc,
-		options?: Doc,
-	) => Promise<Doc | AsyncIterableIterator<Doc>>;
-	query: (
-		params: Doc,
-		options?: Doc,
-	) => Promise<Doc | AsyncIterableIterator<Doc>>;
-	[key: string]: (params: Doc, options?: Doc) => Promise<Doc>;
+    describeEndpoints: (options?: Doc) => Promise<Doc>;
+    describeLimits: (options?: Doc) => Promise<Doc>;
+    listTables: (options?: Doc) => Promise<Doc>;
+    scan: (
+        params: Doc,
+        options?: Doc,
+    ) => Promise<Doc | AsyncIterableIterator<Doc>>;
+    query: (
+        params: Doc,
+        options?: Doc,
+    ) => Promise<Doc | AsyncIterableIterator<Doc>>;
+    [key: string]: (params: Doc, options?: Doc) => Promise<Doc>;
 }
 
 /** Credentials. */
 export interface Credentials {
-	accessKeyId: string; // AKIAIOSFODNN7EXAMPLE
-	secretAccessKey: string; // wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-	sessionToken?: string; // somesessiontoken
+    accessKeyId: string; // AKIAIOSFODNN7EXAMPLE
+    secretAccessKey: string; // wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    sessionToken?: string; // somesessiontoken
 }
 
 /** Client configuration. */
 export interface ClientConfig {
-	credentials: Credentials | (() => Credentials);
-	region?: string; // us-west-2
-	profile?: string; // default
-	canonicalUri?: string; // fx /path/to/somewhere
-	port?: number; // 80
-	host?: string; // localhost
+    credentials: Credentials | (() => Credentials);
+    region?: string; // us-west-2
+    profile?: string; // default
+    canonicalUri?: string; // fx /path/to/somewhere
+    port?: number; // 80
+    host?: string; // localhost
 }
 
 /** Op options. */
 export interface OpOptions {
-	wrapNumbers?: boolean; // wrap numbers to a special number value type? [false]
-	convertEmptyValues?: boolean; // convert empty strings and binaries? [false]
-	translateJSON?: boolean; // translate I/O JSON schemas? [true]
-	iteratePages?: boolean; // if a result is paged, async-iterate it? [true]
+    wrapNumbers?: boolean; // wrap numbers to a special number value type? [false]
+    convertEmptyValues?: boolean; // convert empty strings and binaries? [false]
+    translateJSON?: boolean; // translate I/O JSON schemas? [true]
+    iteratePages?: boolean; // if a result is paged, async-iterate it? [true]
 }
 ```
 
@@ -328,10 +328,9 @@ about parameters of a specific operation.
 
 [MIT](./LICENSE)
 
-
 <!-- References -->
+
 [ci_url]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml
 [ci_img]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml/badge.svg?branch=master
-
 [coverage_img]: https://img.shields.io/codecov/c/github/ericdmoore/dynamodb-deno
-[coverage_url]: https://codecov.io/gh/ericdmoore/dynamodb-deno/branch/master 
+[coverage_url]: https://codecov.io/gh/ericdmoore/dynamodb-deno/branch/master
