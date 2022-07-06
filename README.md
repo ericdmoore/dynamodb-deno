@@ -1,6 +1,6 @@
 # dynamodb-deno
 
-[![local ci][ci_img]](ci_url)
+[![CI Badge][ci_img]](ci_url) [![Coverage Badge][coverage_img]](coverage_url)
 
 DynamoDB client that loves Deno - forked from
 [chiefbiiko](https://github.com/chiefbiiko/dynamodb)
@@ -330,3 +330,7 @@ about parameters of a specific operation.
 
 [ci_url]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml
 [ci_img]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml/badge.svg?branch=master
+
+
+[coverage_img]: https://img.shields.io/codecov/c/github/ericdmoore/dynamodb-deno
+[coverage_url]: https://codecov.io/gh/ericdmoore/dynamodb-deno/branch/master 
