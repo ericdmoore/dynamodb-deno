@@ -328,9 +328,10 @@ about parameters of a specific operation.
 
 [MIT](./LICENSE)
 
+
+<!-- References -->
 [ci_url]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml
 [ci_img]: https://github.com/ericdmoore/dynamodb-deno/actions/workflows/local_ci.yml/badge.svg?branch=master
-
 
 [coverage_img]: https://img.shields.io/codecov/c/github/ericdmoore/dynamodb-deno
 [coverage_url]: https://codecov.io/gh/ericdmoore/dynamodb-deno/branch/master 
