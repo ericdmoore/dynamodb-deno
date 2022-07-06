@@ -1,6 +1,6 @@
 # dynamodb-deno
 
-[![CI Badge][ci_img]](ci_url) [![Coverage Badge][coverage_img]](coverage_url)
+[![CI Badge][ci_img]][ci_url] [![Coverage Badge][coverage_img]][coverage_url]
 
 DynamoDB client that loves Deno - forked from
 [chiefbiiko](https://github.com/chiefbiiko/dynamodb)

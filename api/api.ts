@@ -3,7 +3,7 @@ import { Operation } from "./operation.ts";
 import { Shape } from "./shape.ts";
 import {
   Doc,
-  memoizedProperty,
+  // memoizedProperty,
   property, /*, string as stringUtil*/
 } from "../util.ts";
 
@@ -37,22 +37,22 @@ export function Api(this: any, api: Doc = {}, options: Doc = {}) {
   property(this, "fullName", api.metadata.serviceFullName);
   property(this, "serviceId", api.metadata.serviceId);
 
-  memoizedProperty(this, "className", function (): string {
-    let name: string = api.metadata.serviceAbbreviation ||
-      api.metadata.serviceFullName;
+  // memoizedProperty(this, "className", function (): string {
+  //   let name: string = api.metadata.serviceAbbreviation ||
+  //     api.metadata.serviceFullName;
 
-    if (!name) {
-      return "";
-    }
+  //   if (!name) {
+  //     return "";
+  //   }
 
-    name = name.replace(/^Amazon|AWS\s*|\(.*|\s+|\W+/g, "");
+  //   name = name.replace(/^Amazon|AWS\s*|\(.*|\s+|\W+/g, "");
 
-    if (name === "ElasticLoadBalancing") {
-      name = "ELB";
-    }
+  //   if (name === "ElasticLoadBalancing") {
+  //     name = "ELB";
+  //   }
 
-    return name;
-  });
+  //   return name;
+  // });
 
   function addEndpointOperation(name: string, operation: Doc): void {
     if (operation.endpointoperation) {
@@ -91,11 +91,11 @@ export function Api(this: any, api: Doc = {}, options: Doc = {}) {
   // property(this, 'waiters', new Collection(api.waiters, options, function(name, waiter) {
   //   return new ResourceWaiter(name, waiter, options);
   // }, util.string.lowerFirst));
-
-  if (options.documentation) {
-    property(this, "documentation", api.documentation);
-    property(this, "documentationUrl", api.documentationUrl);
-  }
+  // 
+  // if (options.documentation) {
+  //   property(this, "documentation", api.documentation);
+  //   property(this, "documentationUrl", api.documentationUrl);
+  // }
 }
 
 // /**

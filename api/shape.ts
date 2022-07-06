@@ -67,13 +67,13 @@ export function Shape(
   property(this, "isLocationName", Boolean(shape.locationName), false);
   property(this, "isIdempotent", shape.idempotencyToken);
   property(this, "isJsonValue", shape.jsonvalue);
-  property(
-    this,
-    "isSensitive",
-    shape.sensitive || (shape.prototype && shape.prototype.sensitive),
-  );
-  property(this, "isEventStream", Boolean(shape.eventstream), false);
-  property(this, "isEvent", Boolean(shape.event), false);
+  // property(
+  //   this,
+  //   "isSensitive",
+  //   shape.sensitive || (shape.prototype && shape.prototype.sensitive),
+  // );
+  // property(this, "isEventStream", Boolean(shape.eventstream), false);
+  // property(this, "isEvent", Boolean(shape.event), false);
   property(this, "isEventPayload", Boolean(shape.eventpayload), false);
   property(this, "isEventHeader", Boolean(shape.eventheader), false);
   property(

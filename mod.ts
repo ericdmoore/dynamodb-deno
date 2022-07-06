@@ -79,13 +79,9 @@ export const OPS: Set<string> = new Set<string>([
 
 /** Creates a DynamoDB client. */
 export function createClient(conf: ClientConfig): DynamoDBClient {
-  const _conf: Doc = deriveConfig(conf);
-
   const dyno: DynamoDBClient = {} as DynamoDBClient;
-
   for (const op of OPS) {
-    dyno[camelCase(op)] = baseOp.bind(null, _conf, op);
+    dyno[camelCase(op)] = baseOp.bind(null, deriveConfig(conf), op);
   }
-
   return dyno;
 }

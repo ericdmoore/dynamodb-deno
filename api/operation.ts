@@ -67,28 +67,28 @@ export function Operation(
     // return list;
   });
 
-  memoizedProperty(this, "paginator", function (): any {
-    return options.api.paginators[name];
-  });
+  // memoizedProperty(this, "paginator", function (): any {
+  //   return options.api.paginators[name];
+  // });
 
-  if (options.documentation) {
-    property(this, "documentation", operation.documentation);
-    property(this, "documentationUrl", operation.documentationUrl);
-  }
+  // if (options.documentation) {
+  //   property(this, "documentation", operation.documentation);
+  //   property(this, "documentationUrl", operation.documentationUrl);
+  // }
 
   // idempotentMembers only tracks top-level input shapes
-  memoizedProperty(this, "idempotentMembers", function (): string[] {
-    // const idempotentMembers: string[] = [];
-    // const input: Doc = self.input;
-    // const members: Doc = input.members;
+  // memoizedProperty(this, "idempotentMembers", function (): string[] {
+  //   // const idempotentMembers: string[] = [];
+  //   // const input: Doc = self.input;
+  //   // const members: Doc = input.members;
 
-    if (!self.input.members) {
-      return []; //idempotentMembers;
-    }
+  //   if (!self.input.members) {
+  //     return []; //idempotentMembers;
+  //   }
 
-    return Object.entries(self.input.members)
-      .filter(([_, value]: [string, any]): boolean => value.isIdempotent)
-      .map(([key, _]: [string, any]): string => key);
+  //   return Object.entries(self.input.members)
+  //     .filter(([_, value]: [string, any]): boolean => value.isIdempotent)
+  //     .map(([key, _]: [string, any]): string => key);
 
     // for (const name in members) {
     //   if (!members.hasOwnProperty(name)) {
@@ -101,39 +101,39 @@ export function Operation(
     // }
     //
     // return idempotentMembers;
-  });
+  // });
 
-  memoizedProperty(this, "hasEventOutput", function (): boolean {
-    // var output = self.output;
-    return hasEventStream(self.output);
-  });
+  // memoizedProperty(this, "hasEventOutput", function (): boolean {
+  //   // var output = self.output;
+  //   return hasEventStream(self.output);
+  // });
 }
 
-function hasEventStream(topLevelShape: Doc): boolean {
-  const members: Doc = topLevelShape.members;
-  const payload: string = topLevelShape.payload;
+// function hasEventStream(topLevelShape: Doc): boolean {
+//   const members: Doc = topLevelShape.members;
+//   const payload: string = topLevelShape.payload;
 
-  if (!topLevelShape.members) {
-    return false;
-  }
+//   if (!topLevelShape.members) {
+//     return false;
+//   }
 
-  if (payload) {
-    const payloadMember: Doc = members[payload];
-    return payloadMember.isEventStream;
-  }
+//   if (payload) {
+//     const payloadMember: Doc = members[payload];
+//     return payloadMember.isEventStream;
+//   }
 
-  // check if any member is an event stream
-  for (const name in members) {
-    if (!members.hasOwnProperty(name) && members[name].isEventStream) {
-      // if (members[name].isEventStream === true) {
-      //   return true;
-      // }
-      return true;
-    }
-  }
+//   // check if any member is an event stream
+//   for (const name in members) {
+//     if (!members.hasOwnProperty(name) && members[name].isEventStream) {
+//       // if (members[name].isEventStream === true) {
+//       //   return true;
+//       // }
+//       return true;
+//     }
+//   }
 
-  return false;
-}
+//   return false;
+// }
 
 // /**
 //  * @api private
