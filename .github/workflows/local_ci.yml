@@ -1,4 +1,4 @@
-name: local ci
+name: github ci
 
 on:
   - push
@@ -6,7 +6,7 @@ on:
 
 jobs:
   tests:
-    name: test dynamodb local
+    name: Test Dynamodb Client Using Localized Service
     runs-on: ubuntu-latest
     steps:
       - name: clone repo
