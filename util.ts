@@ -159,9 +159,8 @@ export class DynamoDBSet {
     readonly type: string = '';
 
     /** Creates a dynamodb set. */
-    constructor(list: any[] = [], options: Doc = {}) {
-        Array.prototype.push.apply(this.values, list);
-
+    constructor(list: any[] = [], options?: {validate:boolean}) {
+        this.values = [...list];
         this.type = memberTypeToSetType[typeOf(this.values[0])];
 
         if (!this.type) {
@@ -170,7 +169,7 @@ export class DynamoDBSet {
             );
         }
 
-        if (options.validate) {
+        if (options?.validate) {
             for (const value of this.values) {
                 if (memberTypeToSetType[typeOf(value)] !== this.type) {
                     throw new Error(

@@ -32,6 +32,6 @@ coverage_prev_clear:
 coverage_ci: coverage_tests
 	deno coverage .coverage/ --lcov --output=.coverage/_deno.lcov;
 
-coverage: local_db_start coverage_prev_clear wait5 coverage_tests coverage_ci
+coverage: coverage_prev_clear local_db_start wait5 coverage_tests coverage_ci
 	genhtml -o cov_profile/html .coverage/_deno.lcov;
 	open cov_profile/html/index.html
