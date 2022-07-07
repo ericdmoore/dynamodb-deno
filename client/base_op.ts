@@ -73,17 +73,17 @@ export async function baseOp(
 
                     lastEvaluatedKey = rawResult.LastEvaluatedKey;
 
-                    if (!translateJSON) {
-                        return {
-                            value: rawResult,
-                            done: false,
-                        };
-                    } else {
+                    // if (!translateJSON) {
+                    //     return {
+                    //         value: rawResult,
+                    //         done: false,
+                    //     };
+                    // } else {
                         return {
                             value: translator.translateOutput(rawResult, outputShape),
                             done: false,
                         };
-                    }
+                    // }
                 } else {
                     params.ExclusiveStartKey = lastEvaluatedKey;
                 }
