@@ -25,26 +25,26 @@ export function Operation(
     property(this, 'httpMethod', operation.http.method || 'POST');
     property(this, 'httpPath', operation.http.requestUri || '/');
     property(this, 'authtype', operation.authtype || '');
-    // property(
-    //     this,
-    //     'endpointDiscoveryRequired',
-    //     operation.endpointdiscovery
-    //         ? operation.endpointdiscovery.required ? 'REQUIRED' : 'OPTIONAL'
-    //         : 'NULL',
-    // );
+    property(
+        this,
+        'endpointDiscoveryRequired',
+        operation.endpointdiscovery
+            ? operation.endpointdiscovery.required ? 'REQUIRED' : 'OPTIONAL'
+            : 'NULL',
+    );
 
     memoizedProperty(this, 'input', function (): any {
-        // if (!operation.input) {
-        //     return /*new*/ Shape.create({ type: 'structure' }, options);
-        // }
+        if (!operation.input) {
+            return /*new*/ Shape.create({ type: 'structure' }, options);
+        }
 
         return Shape.create(operation.input, options);
     });
 
     memoizedProperty(this, 'output', function (): any {
-        // if (!operation.output) {
-        //     return /*new*/ Shape.create({ type: 'structure' }, options);
-        // }
+        if (!operation.output) {
+            return /*new*/ Shape.create({ type: 'structure' }, options);
+        }
 
         return Shape.create(operation.output, options);
     });

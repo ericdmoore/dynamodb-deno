@@ -1,27 +1,26 @@
-import { b64FromUint8Array, b64toUint8Array } from '../deps.ts'
+// import DynamoDB = require('../../clients/dynamodb');
+import { Buffer } from 'https://deno.land/std/io/buffer.ts';
 import { Doc, DynamoDBNumberValue, DynamoDBSet, typeOf } from '../util.ts';
 
-type ValidSetTypes = Set<string> | Set<number> | Set<Uint8Array>
-
 interface FormatInputOptions {
-    convertEmptyValues?: boolean;
-    wrapNumbers?: boolean;
+    convertEmptyValues: boolean;
+    wrapNumbers: boolean;
 }
-
-// type BinarayLike =
-//     | File
-//     | Blob
-//     | ArrayBuffer
-//     | DataView
-//     | Int8Array
-//     | Uint8Array
-//     | Uint8ClampedArray
-//     | Int16Array
-//     | Uint16Array
-//     | Int32Array
-//     | Uint32Array
-//     | Float32Array
-//     | Float64Array;
+type BinarayLike =
+    | File
+    | Blob
+    | Buffer
+    | ArrayBuffer
+    | DataView
+    | Int8Array
+    | Uint8Array
+    | Uint8ClampedArray
+    | Int16Array
+    | Uint16Array
+    | Int32Array
+    | Uint32Array
+    | Float32Array
+    | Float64Array;
 
 type ConvertableInputs =
     | Doc
@@ -34,12 +33,17 @@ type ConvertableInputs =
     | Uint8Array;
 // | BinarayLike
 
+const dec = new TextDecoder();
+const enc = new TextEncoder();
+
+const b64FromUint8Array = (buf: Uint8Array) => btoa(dec.decode(buf));
+const b64toUint8Array = (b64: string) => enc.encode(atob(b64));
 
 /** Formats a list. */
-function formatList(data: ConvertableInputs[], options?: FormatInputOptions): Doc {
+function formatList(data: any[], options?: FormatInputOptions): Doc {
     const list: Doc = { L: [] };
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i: number = 0; i < data.length; i++) {
         list['L'].push(Converter.input(data[i], options));
     }
 
@@ -68,56 +72,58 @@ export function formatMap(data: Doc, options?: FormatInputOptions): Doc {
 
 /** Formats a set. */
 export function formatSet(
-    data: ValidSetTypes,
+    data: Set<string | number | Uint8Array>,
     options?: FormatInputOptions,
 ): Doc {
-    const values = [...data.values()] as string[] |  number[] | Uint8Array[];
-    const setType: 'String' | 'Number' | 'Binary' = typeof values[0] === 'string'
+    if (options?.convertEmptyValues && filterEmptySetValues(data).length === 0) {
+        return Converter.input(null);
+    }
+
+    let values: unknown[] = [...data.values()];
+    const setType: 'String' | 'Number' | 'Buffer' = typeof values[0] === 'string'
         ? 'String'
         : typeof values[0] === 'number'
         ? 'Number'
-        : 'Binary';
-
-    if (options?.convertEmptyValues && filterEmptySetValues({type: setType, values}).length === 0) {
-            return Converter.input(null);
-    }
+        : 'Buffer';
 
     const map: Doc = {};
     switch (setType) {
         case 'String':
-            map['SS'] = options?.convertEmptyValues 
-                ? filterEmptySetValues({type: setType, values}) 
-                : values;
+            map['SS'] = values;
             break;
-        case 'Binary':
-            map['BS'] = (values as Uint8Array[])
-                .filter( v => !options?.convertEmptyValues || v?.length > 0)
-                .map((v) => b64FromUint8Array(v));
+        case 'Buffer':
+            map['BS'] = (values as Uint8Array[]).map((v) => b64FromUint8Array(v));
             break;
         case 'Number':
-            // NO Empties - therefore no filtering
             map['NS'] = values.map((n) => (n as number).toString());
     }
 
     return map;
 }
 
-
-/**
- * This expression is not callable.
-  Each member of the union type '{ <S extends string>(predicate: (value: string, index: number, array: string[]) => value is S, 
-    thisArg?: any): S[]; (predicate: (value: string, index: number, array: string[]) => unknown, thisArg?: any): string[]; } | { ...; }' has signatures, but none of those signatures are compatible with each other.
- */
-
-interface FilterableInput {
-    type: "String" | 'Number' | 'Binary'
-    values: string[] |  number[] | Uint8Array[]
-}
 /** Filters empty set values. */
-export function filterEmptySetValues(set: FilterableInput): unknown[] {
-    return set.type !== 'Number'
-        ? (set.values as (string | Uint8Array)[]).filter(e => e && e.length > 0)
-        : set.values;
+export function filterEmptySetValues(set: Doc): any[] {
+    const nonEmptyValues: any[] = [];
+
+    const potentiallyEmptyTypes: Doc = {
+        String: true,
+        Binary: true,
+        Number: false,
+    };
+
+    if (potentiallyEmptyTypes[set.type]) {
+        for (let i: number = 0; i < set.values.length; i++) {
+            if (set.values[i].length === 0) {
+                continue;
+            }
+
+            nonEmptyValues.push(set.values[i]);
+        }
+
+        return nonEmptyValues;
+    }
+
+    return set.values;
 }
 
 /** aws DynamoDB req/res document converter. */
@@ -146,9 +152,9 @@ export class Converter {
         if (type === 'Object') {
             return formatMap(data as Doc, options);
         } else if (type === 'Array') {
-            return formatList(data as ConvertableInputs[], options);
+            return formatList(data as Array<unknown>, options);
         } else if (type === 'Set') {
-            return formatSet(data as ValidSetTypes, options);
+            return formatSet(data as Set<string | number | Uint8Array>, options);
         } else if (type === 'String') {
             if ((data as string).length === 0 && options?.convertEmptyValues) {
                 return Converter.input(null);

@@ -1,16 +1,13 @@
-.PHONY: tests, local_dl, local_run, coverage_tests
+.PHONY: tests, local_dl, local_run
 
 # sync this with the vars in the `local_db_avail.sh` file
 URL = "https://s3.eu-central-1.amazonaws.com/dynamodb-local-frankfurt/dynamodb_local_latest.tar.gz"
 DIR = "./dynamodb_local_latest"
 
-wait5:
-	sleep 5.1
-
-test:
+tests:
 	deno test --allow-run --allow-net
 
-local_tests: local_db_start wait5 test local_db_stop
+local_tests: local_db_start wait5 tests local_db_stop
 	
 local_dl:
 	./local_db_avail.sh $(DIR) $(URL)
@@ -20,6 +17,9 @@ local_db_start:
 
 local_db_stop:
 	pkill java
+
+wait5:
+	sleep 5.1
 
 coverage_tests:
 	deno test --allow-run --allow-net --coverage=./.coverage

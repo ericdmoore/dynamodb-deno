@@ -1,4 +1,4 @@
-import { b64FromUint8Array, b64toUint8Array } from '../deps.ts';
+import { base64FromUint8Array, base64ToUint8Array } from '../deps.ts';
 import { Collection } from './collection.ts';
 // import { Doc } from "../types.ts"
 import {
@@ -91,29 +91,29 @@ export function Shape(
     );
     property(this, 'hostLabel', Boolean(shape.hostLabel), false);
 
-    // if (options.documentation) {
-    //     property(this, 'documentation', shape.documentation);
-    //     property(this, 'documentationUrl', shape.documentationUrl);
-    // }
+    if (options.documentation) {
+        property(this, 'documentation', shape.documentation);
+        property(this, 'documentationUrl', shape.documentationUrl);
+    }
 
-    // if (shape.xmlAttribute) {
-    //     property(this, 'isXmlAttribute', shape.xmlAttribute || false);
-    // }
+    if (shape.xmlAttribute) {
+        property(this, 'isXmlAttribute', shape.xmlAttribute || false);
+    }
 
     // type conversion and parsing
     property(this, 'defaultValue', null);
 
-    // this.toWireFormat = function (value: any): any {
-    //     if (value === null || value === undefined) {
-    //         return '';
-    //     }
+    this.toWireFormat = function (value: any): any {
+        if (value === null || value === undefined) {
+            return '';
+        }
 
-    //     return value;
-    // };
+        return value;
+    };
 
-    // this.toType = function (value: any): any {
-    //     return value;
-    // };
+    this.toType = function (value: any): any {
+        return value;
+    };
 }
 
 /**
@@ -255,40 +255,40 @@ function StructureShape(this: any, shape: Doc, options: Doc = {}) {
             }),
         );
 
-        // memoizedProperty(this, 'memberNames', function (): string[] {
-        //     return shape.xmlOrder || Object.keys(shape.members);
-        // });
+        memoizedProperty(this, 'memberNames', function (): string[] {
+            return shape.xmlOrder || Object.keys(shape.members);
+        });
 
-        // if (shape.event) {
-        //     memoizedProperty(this, 'eventPayloadMemberName', function (): string {
-        //         const members: Doc = self.members;
-        //         const memberNames: string[] = self.memberNames;
+        if (shape.event) {
+            memoizedProperty(this, 'eventPayloadMemberName', function (): string {
+                const members: Doc = self.members;
+                const memberNames: string[] = self.memberNames;
 
-        //         // iterate over members to find ones that are event payloads
-        //         for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
-        //             if (members[memberNames[i]].isEventPayload) {
-        //                 return memberNames[i];
-        //             }
-        //         }
+                // iterate over members to find ones that are event payloads
+                for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
+                    if (members[memberNames[i]].isEventPayload) {
+                        return memberNames[i];
+                    }
+                }
 
-        //         return '';
-        //     });
+                return '';
+            });
 
-        //     memoizedProperty(this, 'eventHeaderMemberNames', function (): string[] {
-        //         const members: Doc = self.members;
-        //         const memberNames: string[] = self.memberNames;
-        //         const eventHeaderMemberNames: string[] = [];
+            memoizedProperty(this, 'eventHeaderMemberNames', function (): string[] {
+                const members: Doc = self.members;
+                const memberNames: string[] = self.memberNames;
+                const eventHeaderMemberNames: string[] = [];
 
-        //         // iterate over members to find ones that are event headers
-        //         for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
-        //             if (members[memberNames[i]].isEventHeader) {
-        //                 eventHeaderMemberNames.push(memberNames[i]);
-        //             }
-        //         }
+                // iterate over members to find ones that are event headers
+                for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
+                    if (members[memberNames[i]].isEventHeader) {
+                        eventHeaderMemberNames.push(memberNames[i]);
+                    }
+                }
 
-        //         return eventHeaderMemberNames;
-        //     });
-        // }
+                return eventHeaderMemberNames;
+            });
+        }
     }
 
     if (shape.required) {
@@ -390,54 +390,54 @@ function MapShape(this: any, shape: Doc, options: Doc = {}) {
 }
 
 function TimestampShape(this: any, shape: Doc) {
-    // const self: any = this;
+    const self: any = this;
 
-    // Shape.apply(this, arguments as any);
+    Shape.apply(this, arguments as any);
 
-    // if (shape.timestampFormat) {
-    //     property(this, 'timestampFormat', shape.timestampFormat);
-    // } else if (self.isTimestampFormatSet && this.timestampFormat) {
-    //     property(this, 'timestampFormat', this.timestampFormat);
-    // } else if (this.location === 'header') {
-    //     property(this, 'timestampFormat', 'rfc822');
-    // } else if (this.location === 'querystring') {
-    //     property(this, 'timestampFormat', 'iso8601');
-    // } else if (this.api) {
-    //     switch (this.api.protocol) {
-    //         case 'json':
-    //         case 'rest-json':
-    //             property(this, 'timestampFormat', 'unixTimestamp');
-    //             break;
-    //         case 'rest-xml':
-    //         case 'query':
-    //         case 'ec2':
-    //             property(this, 'timestampFormat', 'iso8601');
-    //             break;
-    //     }
-    // }
+    if (shape.timestampFormat) {
+        property(this, 'timestampFormat', shape.timestampFormat);
+    } else if (self.isTimestampFormatSet && this.timestampFormat) {
+        property(this, 'timestampFormat', this.timestampFormat);
+    } else if (this.location === 'header') {
+        property(this, 'timestampFormat', 'rfc822');
+    } else if (this.location === 'querystring') {
+        property(this, 'timestampFormat', 'iso8601');
+    } else if (this.api) {
+        switch (this.api.protocol) {
+            case 'json':
+            case 'rest-json':
+                property(this, 'timestampFormat', 'unixTimestamp');
+                break;
+            case 'rest-xml':
+            case 'query':
+            case 'ec2':
+                property(this, 'timestampFormat', 'iso8601');
+                break;
+        }
+    }
 
-    // this.toType = function (value: any): undefined | Date {
-    //     if (value === null || value === undefined) {
-    //         return undefined;
-    //     }
+    this.toType = function (value: any): undefined | Date {
+        if (value === null || value === undefined) {
+            return undefined;
+        }
 
-    //     if (typeof value.toISOString === 'function') {
-    //         return value as Date;
-    //     }
+        if (typeof value.toISOString === 'function') {
+            return value as Date;
+        }
 
-    //     if (typeof value === 'string' || typeof value === 'number') {
-    //         return date.parseTimestamp(value);
-    //     }
+        if (typeof value === 'string' || typeof value === 'number') {
+            return date.parseTimestamp(value);
+        }
 
-    //     return undefined;
-    //     // return typeof value === "string" || typeof value === "number"
-    //     //   ? date.parseTimestamp(value)
-    //     //   : null;
-    // };
+        return undefined;
+        // return typeof value === "string" || typeof value === "number"
+        //   ? date.parseTimestamp(value)
+        //   : null;
+    };
 
-    // this.toWireFormat = function (value: Date): string | number {
-    //     return date.format(value, self.timestampFormat as FormatterOptions);
-    // };
+    this.toWireFormat = function (value: Date): string | number {
+        return date.format(value, self.timestampFormat as FormatterOptions);
+    };
 }
 
 function StringShape(this: any) {
@@ -489,30 +489,31 @@ function IntegerShape(this: any) {
 }
 
 function BinaryShape(this: any) {
-    // Shape.apply(this, arguments as any);
+    Shape.apply(this, arguments as any);
 
-    // this.toType = b64FromUint8Array;
-    // this.toWireFormat = b64FromUint8Array;
+    this.toType = base64ToUint8Array;
+
+    this.toWireFormat = base64FromUint8Array;
 }
 
 function Base64Shape(this: any) {
-    // BinaryShape.apply(this, arguments as any);
+    BinaryShape.apply(this, arguments as any);
 }
 
 function BooleanShape(this: any) {
-    // Shape.apply(this, arguments as any);
+    Shape.apply(this, arguments as any);
 
-    // this.toType = function (value: any): undefined | boolean {
-    //     if (typeof value === 'boolean') {
-    //         return value;
-    //     }
+    this.toType = function (value: any): undefined | boolean {
+        if (typeof value === 'boolean') {
+            return value;
+        }
 
-    //     if (value === null || value === undefined) {
-    //         return undefined;
-    //     }
+        if (value === null || value === undefined) {
+            return undefined;
+        }
 
-    //     return value === 'true';
-    // };
+        return value === 'true';
+    };
 }
 
 /**
