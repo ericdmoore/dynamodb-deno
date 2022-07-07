@@ -299,27 +299,27 @@ function StructureShape(this: any, shape: Doc, options: Doc = {}) {
             return acc;
         }, {});
 
-        property(
-            this,
-            'isRequired',
-            function (name: string): boolean {
-                // if (!requiredMap) {
-                //   // requiredMap = {};
-                //   //
-                //   // for (let i:number = 0; i < shape.required.length; i++) {
-                //   //   requiredMap[shape.required[i]] = true;
-                //   // }
-                //   requiredMap = shape.required.reduce((acc: Doc, req: string): Doc => {
-                //     acc[req] = true;
-                //     return acc;
-                //   }, {});
-                // }
+        // property(
+        //     this,
+        //     'isRequired',
+        //     function (name: string): boolean {
+        //         // if (!requiredMap) {
+        //         //   // requiredMap = {};
+        //         //   //
+        //         //   // for (let i:number = 0; i < shape.required.length; i++) {
+        //         //   //   requiredMap[shape.required[i]] = true;
+        //         //   // }
+        //         //   requiredMap = shape.required.reduce((acc: Doc, req: string): Doc => {
+        //         //     acc[req] = true;
+        //         //     return acc;
+        //         //   }, {});
+        //         // }
 
-                return requiredMap[name];
-            },
-            false,
-            true,
-        );
+        //         return requiredMap[name];
+        //     },
+        //     false,
+        //     true,
+        // );
     }
 
     property(this, 'resultWrapper', shape.resultWrapper || null);
@@ -343,9 +343,9 @@ function ListShape(this: any, shape: Doc, options: Doc = {}) {
     CompositeShape.apply(this, arguments as any);
 
     if (firstInit) {
-        property(this, 'defaultValue', function (): any[] {
-            return [];
-        });
+        // property(this, 'defaultValue', function (): any[] {
+        //     return [];
+        // });
     }
 
     if (shape.member) {
@@ -354,13 +354,13 @@ function ListShape(this: any, shape: Doc, options: Doc = {}) {
         });
     }
 
-    if (this.flattened) {
-        const oldName: string = this.name;
+    // if (this.flattened) {
+    //     const oldName: string = this.name;
 
-        memoizedProperty(this, 'name', function (): string {
-            return self.member.name || oldName;
-        });
-    }
+    //     memoizedProperty(this, 'name', function (): string {
+    //         return self.member.name || oldName;
+    //     });
+    // }
 }
 
 function MapShape(this: any, shape: Doc, options: Doc = {}) {
@@ -369,10 +369,10 @@ function MapShape(this: any, shape: Doc, options: Doc = {}) {
     CompositeShape.apply(this, arguments as any);
 
     if (firstInit) {
-        property(this, 'defaultValue', function (): Doc {
-            return {};
-        });
-        property(this, 'key', Shape.create({ type: 'string' }, options));
+        // property(this, 'defaultValue', function (): Doc {
+        //     return {};
+        // });
+            property(this, 'key', Shape.create({ type: 'string' }, options));
         property(this, 'value', Shape.create({ type: 'string' }, options));
     }
 
@@ -400,11 +400,11 @@ function TimestampShape(this: any, shape: Doc) {
             case 'rest-json':
                 property(this, 'timestampFormat', 'unixTimestamp');
                 break;
-            case 'rest-xml':
-            case 'query':
-            case 'ec2':
-                property(this, 'timestampFormat', 'iso8601');
-                break;
+            // case 'rest-xml':
+            // case 'query':
+            // case 'ec2':
+            //     property(this, 'timestampFormat', 'iso8601');
+            //     break;
         }
     } 
     // else if (shape.timestampFormat) {
@@ -498,7 +498,7 @@ function BinaryShape(this: any) {
 }
 
 function Base64Shape(this: any) {
-    BinaryShape.apply(this, arguments as any);
+    // BinaryShape.apply(this, arguments as any);
 }
 
 function BooleanShape(this: any) {
