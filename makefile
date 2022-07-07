@@ -25,6 +25,7 @@ coverage_tests:
 	deno test --allow-run --allow-net --coverage=./.coverage
 
 coverage_prev_clear:
+	rm -f shared-local-instance.db
 	rm -rf .coverage/
 	rm -rf cov_profile/
 

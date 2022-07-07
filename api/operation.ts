@@ -34,17 +34,17 @@ export function Operation(
     );
 
     memoizedProperty(this, 'input', function (): any {
-        if (!operation.input) {
-            return /*new*/ Shape.create({ type: 'structure' }, options);
-        }
+        // if (!operation.input) {
+        //     return /*new*/ Shape.create({ type: 'structure' }, options);
+        // }
 
         return Shape.create(operation.input, options);
     });
 
     memoizedProperty(this, 'output', function (): any {
-        if (!operation.output) {
-            return /*new*/ Shape.create({ type: 'structure' }, options);
-        }
+        // if (!operation.output) {
+        //     return /*new*/ Shape.create({ type: 'structure' }, options);
+        // }
 
         return Shape.create(operation.output, options);
     });

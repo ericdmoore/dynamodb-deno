@@ -91,14 +91,14 @@ export function Shape(
     );
     property(this, 'hostLabel', Boolean(shape.hostLabel), false);
 
-    if (options.documentation) {
-        property(this, 'documentation', shape.documentation);
-        property(this, 'documentationUrl', shape.documentationUrl);
-    }
+    // if (options.documentation) {
+    //     property(this, 'documentation', shape.documentation);
+    //     property(this, 'documentationUrl', shape.documentationUrl);
+    // }
 
-    if (shape.xmlAttribute) {
-        property(this, 'isXmlAttribute', shape.xmlAttribute || false);
-    }
+    // if (shape.xmlAttribute) {
+    //     property(this, 'isXmlAttribute', shape.xmlAttribute || false);
+    // }
 
     // type conversion and parsing
     property(this, 'defaultValue', null);
@@ -255,40 +255,40 @@ function StructureShape(this: any, shape: Doc, options: Doc = {}) {
             }),
         );
 
-        memoizedProperty(this, 'memberNames', function (): string[] {
-            return shape.xmlOrder || Object.keys(shape.members);
-        });
+        // memoizedProperty(this, 'memberNames', function (): string[] {
+        //     return shape.xmlOrder || Object.keys(shape.members);
+        // });
 
-        if (shape.event) {
-            memoizedProperty(this, 'eventPayloadMemberName', function (): string {
-                const members: Doc = self.members;
-                const memberNames: string[] = self.memberNames;
+        // if (shape.event) {
+        //     memoizedProperty(this, 'eventPayloadMemberName', function (): string {
+        //         const members: Doc = self.members;
+        //         const memberNames: string[] = self.memberNames;
 
-                // iterate over members to find ones that are event payloads
-                for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
-                    if (members[memberNames[i]].isEventPayload) {
-                        return memberNames[i];
-                    }
-                }
+        //         // iterate over members to find ones that are event payloads
+        //         for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
+        //             if (members[memberNames[i]].isEventPayload) {
+        //                 return memberNames[i];
+        //             }
+        //         }
 
-                return '';
-            });
+        //         return '';
+        //     });
 
-            memoizedProperty(this, 'eventHeaderMemberNames', function (): string[] {
-                const members: Doc = self.members;
-                const memberNames: string[] = self.memberNames;
-                const eventHeaderMemberNames: string[] = [];
+        //     memoizedProperty(this, 'eventHeaderMemberNames', function (): string[] {
+        //         const members: Doc = self.members;
+        //         const memberNames: string[] = self.memberNames;
+        //         const eventHeaderMemberNames: string[] = [];
 
-                // iterate over members to find ones that are event headers
-                for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
-                    if (members[memberNames[i]].isEventHeader) {
-                        eventHeaderMemberNames.push(memberNames[i]);
-                    }
-                }
+        //         // iterate over members to find ones that are event headers
+        //         for (let i: number = 0, iLen = memberNames.length; i < iLen; i++) {
+        //             if (members[memberNames[i]].isEventHeader) {
+        //                 eventHeaderMemberNames.push(memberNames[i]);
+        //             }
+        //         }
 
-                return eventHeaderMemberNames;
-            });
-        }
+        //         return eventHeaderMemberNames;
+        //     });
+        // }
     }
 
     if (shape.required) {
@@ -324,16 +324,16 @@ function StructureShape(this: any, shape: Doc, options: Doc = {}) {
 
     property(this, 'resultWrapper', shape.resultWrapper || null);
 
-    if (shape.payload) {
-        property(this, 'payload', shape.payload);
-    }
+    // if (shape.payload) {
+    //     property(this, 'payload', shape.payload);
+    // }
 
-    if (typeof shape.xmlNamespace === 'string') {
-        property(this, 'xmlNamespaceUri', shape.xmlNamespace);
-    } else if (typeof shape.xmlNamespace === 'object') {
-        property(this, 'xmlNamespacePrefix', shape.xmlNamespace.prefix);
-        property(this, 'xmlNamespaceUri', shape.xmlNamespace.uri);
-    }
+    // if (typeof shape.xmlNamespace === 'string') {
+    //     property(this, 'xmlNamespaceUri', shape.xmlNamespace);
+    // } else if (typeof shape.xmlNamespace === 'object') {
+    //     property(this, 'xmlNamespacePrefix', shape.xmlNamespace.prefix);
+    //     property(this, 'xmlNamespaceUri', shape.xmlNamespace.uri);
+    // }
 }
 
 function ListShape(this: any, shape: Doc, options: Doc = {}) {
@@ -394,15 +394,7 @@ function TimestampShape(this: any, shape: Doc) {
 
     Shape.apply(this, arguments as any);
 
-    if (shape.timestampFormat) {
-        property(this, 'timestampFormat', shape.timestampFormat);
-    } else if (self.isTimestampFormatSet && this.timestampFormat) {
-        property(this, 'timestampFormat', this.timestampFormat);
-    } else if (this.location === 'header') {
-        property(this, 'timestampFormat', 'rfc822');
-    } else if (this.location === 'querystring') {
-        property(this, 'timestampFormat', 'iso8601');
-    } else if (this.api) {
+    if (this.api) {
         switch (this.api.protocol) {
             case 'json':
             case 'rest-json':
@@ -414,7 +406,16 @@ function TimestampShape(this: any, shape: Doc) {
                 property(this, 'timestampFormat', 'iso8601');
                 break;
         }
-    }
+    } 
+    // else if (shape.timestampFormat) {
+    //     property(this, 'timestampFormat', shape.timestampFormat);
+    // } else if (self.isTimestampFormatSet && this.timestampFormat) {
+    //     property(this, 'timestampFormat', this.timestampFormat);
+    // } else if (this.location === 'header') {
+    //     property(this, 'timestampFormat', 'rfc822');
+    // } else if (this.location === 'querystring') {
+    //     property(this, 'timestampFormat', 'iso8601');
+    // }
 
     this.toType = function (value: any): undefined | Date {
         if (value === null || value === undefined) {
@@ -461,17 +462,17 @@ function StringShape(this: any) {
 }
 
 function FloatShape(this: any) {
-    Shape.apply(this, arguments as any);
+    // Shape.apply(this, arguments as any);
 
-    this.toType = function (value: any): undefined | number {
-        if (value === null || value === undefined) {
-            return undefined;
-        }
+    // this.toType = function (value: any): undefined | number {
+    //     if (value === null || value === undefined) {
+    //         return undefined;
+    //     }
 
-        return parseFloat(value);
-    };
+    //     return parseFloat(value);
+    // };
 
-    this.toWireFormat = this.toType;
+    // this.toWireFormat = this.toType;
 }
 
 function IntegerShape(this: any) {
@@ -489,11 +490,11 @@ function IntegerShape(this: any) {
 }
 
 function BinaryShape(this: any) {
-    Shape.apply(this, arguments as any);
+    // Shape.apply(this, arguments as any);
 
-    this.toType = base64ToUint8Array;
+    // this.toType = base64ToUint8Array;
 
-    this.toWireFormat = base64FromUint8Array;
+    // this.toWireFormat = base64FromUint8Array;
 }
 
 function Base64Shape(this: any) {
@@ -501,19 +502,19 @@ function Base64Shape(this: any) {
 }
 
 function BooleanShape(this: any) {
-    Shape.apply(this, arguments as any);
+    // Shape.apply(this, arguments as any);
 
-    this.toType = function (value: any): undefined | boolean {
-        if (typeof value === 'boolean') {
-            return value;
-        }
+    // this.toType = function (value: any): undefined | boolean {
+    //     if (typeof value === 'boolean') {
+    //         return value;
+    //     }
 
-        if (value === null || value === undefined) {
-            return undefined;
-        }
+    //     if (value === null || value === undefined) {
+    //         return undefined;
+    //     }
 
-        return value === 'true';
-    };
+    //     return value === 'true';
+    // };
 }
 
 /**
