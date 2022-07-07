@@ -61,3 +61,31 @@ Deno.test('Converter.marshall', () => {
         e: { L: [{ N: '1' }, { S: 'a' }, { N: '3' }, { S: 'c' }] },
     });
 });
+
+Deno.test('Converter.input.String', ()=>{
+    const i = 'Hello';
+    const converted = Converter.input(i);
+    assertEquals(converted, { S: i });
+})
+
+
+
+Deno.test('Converter.input.Set.String w/RemoveEmptyish', ()=>{
+    const i = new Set(['Hello', undefined, 'World']);
+    const converted = Converter.input(i, {convertEmptyValues: true});
+    assertEquals(converted, { SS: ['Hello','World'] });
+})
+
+Deno.test('Converter.input.Set.String w/RemoveEmptyish - All Empties', ()=>{
+    const i = new Set(['', null, '']);
+    const converted = Converter.input(i, {convertEmptyValues: true});
+    assertEquals(converted, { NULL: true });
+})
+
+Deno.test('Converter.input.Set.Number w/RemoveEmptyish', ()=>{
+    const i = new Set([1,2,3]);
+    const converted = Converter.input(i, {convertEmptyValues: true});
+    assertEquals(converted, { NS: ['1','2','3'] });
+})
+
+
