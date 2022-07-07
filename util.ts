@@ -65,8 +65,20 @@ export function memoizedProperty(
     );
 }
 
+type ListOfTypes =
+    | 'Object'
+    | 'Array'
+    | 'Set'
+    | 'String'
+    | 'Number'
+    | 'NumberValue'
+    | 'Binary'
+    | 'Boolean'
+    | 'null'
+    | 'undefined';
+
 /** aws typeof impl. */
-export function typeOf(data: any): string {
+export function typeOf(data: any): ListOfTypes {
     if (data === null && typeof data === 'object') {
         return 'null';
     } else if (data !== undefined && isBinary(data)) {

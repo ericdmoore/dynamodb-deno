@@ -35,6 +35,12 @@ dificult, users can recreate a similar experience by leveraging the oother
 There have also been some non-material stylistic changes - since I intend to
 maintain this fork.
 
+## Roadmap
+
+The goal for this project is to keep this project working until [aws-sdk-js-v3/clients/client-dynamodb](https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-dynamodb) works via something like [esm.sh](https://esm.sh)
+
+If you know of a deno package adapter service that works well with the offcial aws v3 dynamo client, please submit an issue to me so I can stop proping this package up, and just use the official one.
+
 ## API
 
 ### Contents

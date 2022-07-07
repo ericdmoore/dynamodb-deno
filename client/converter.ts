@@ -1,9 +1,46 @@
 // import DynamoDB = require('../../clients/dynamodb');
-import { base64FromUint8Array, base64ToUint8Array } from '../deps.ts';
+import { Buffer } from 'https://deno.land/std/io/buffer.ts';
 import { Doc, DynamoDBNumberValue, DynamoDBSet, typeOf } from '../util.ts';
 
+interface FormatInputOptions {
+    convertEmptyValues: boolean;
+    wrapNumbers: boolean;
+}
+type BinarayLike =
+    | File
+    | Blob
+    | Buffer
+    | ArrayBuffer
+    | DataView
+    | Int8Array
+    | Uint8Array
+    | Uint8ClampedArray
+    | Int16Array
+    | Uint16Array
+    | Int32Array
+    | Uint32Array
+    | Float32Array
+    | Float64Array;
+
+type ConvertableInputs =
+    | Doc
+    | string
+    | number
+    | Array<unknown>
+    | Set<string | number | Uint8Array>
+    | boolean
+    | null
+    | Uint8Array;
+// | BinarayLike
+
+const dec = new TextDecoder();
+const enc = new TextEncoder();
+
+const b64FromUint8Array = (buf: Uint8Array) => btoa(dec.decode(buf));
+const b64toUint8Array = (b64: string) => enc.encode(atob(b64));
+
 /** Formats a list. */
-function formatList(data: any[], options: Doc = {}): Doc {
+function formatList(data: any[], options?: FormatInputOptions): Doc {
     const list: Doc = { L: [] };
 
     for (let i: number = 0; i < data.length; i++) {
@@ -14,18 +51,18 @@ function formatList(data: any[], options: Doc = {}): Doc {
 }
 
 /** Converts a number. */
-function convertNumber(value: string, wrapNumbers: boolean = false): any {
-    return wrapNumbers ? new DynamoDBNumberValue(value) : Number(value);
+function convertNumber(value: string, options?: FormatInputOptions): any {
+    return options?.wrapNumbers ? new DynamoDBNumberValue(value) : Number(value);
 }
 
 /** Formats a map. */
-function formatMap(data: Doc, options: Doc = {}): Doc {
+export function formatMap(data: Doc, options?: FormatInputOptions): Doc {
     const map: Doc = { M: {} };
 
     for (const key in data) {
         const formatted: Doc = Converter.input(data[key], options);
 
-        if (formatted !== void 0) {
+        if (formatted !== undefined) {
             map['M'][key] = formatted;
         }
     }
@@ -34,37 +71,38 @@ function formatMap(data: Doc, options: Doc = {}): Doc {
 }
 
 /** Formats a set. */
-function formatSet(data: Doc, options: Doc = {}): Doc {
-    let values: any[] = data.values;
-
-    if (options.convertEmptyValues) {
-        values = filterEmptySetValues(data);
-
-        if (values.length === 0) {
-            return Converter.input(null);
-        }
+export function formatSet(
+    data: Set<string | number | Uint8Array>,
+    options?: FormatInputOptions,
+): Doc {
+    if (options?.convertEmptyValues && filterEmptySetValues(data).length === 0) {
+        return Converter.input(null);
     }
 
-    const map: Doc = {};
+    let values: unknown[] = [...data.values()];
+    const setType: 'String' | 'Number' | 'Buffer' = typeof values[0] === 'string'
+        ? 'String'
+        : typeof values[0] === 'number'
+        ? 'Number'
+        : 'Buffer';
 
-    switch (data.type) {
+    const map: Doc = {};
+    switch (setType) {
         case 'String':
             map['SS'] = values;
             break;
-        case 'Binary':
-            map['BS'] = values;
+        case 'Buffer':
+            map['BS'] = (values as Uint8Array[]).map((v) => b64FromUint8Array(v));
             break;
         case 'Number':
-            map['NS'] = values.map(function (value) {
-                return value.toString();
-            });
+            map['NS'] = values.map((n) => (n as number).toString());
     }
 
     return map;
 }
 
 /** Filters empty set values. */
-function filterEmptySetValues(set: Doc): any[] {
+export function filterEmptySetValues(set: Doc): any[] {
     const nonEmptyValues: any[] = [];
 
     const potentiallyEmptyTypes: Doc = {
@@ -109,37 +147,34 @@ export class Converter {
      * @see AWS.DynamoDB.Converter.marshall AWS.DynamoDB.Converter.marshall to
      *    convert entire records (rather than individual attributes)
      */
-    static input(data: any, options: Doc = {}): Doc {
+    static input(data: ConvertableInputs, options?: FormatInputOptions): Doc {
         const type: string = typeOf(data);
-
         if (type === 'Object') {
-            return formatMap(data, options);
+            return formatMap(data as Doc, options);
         } else if (type === 'Array') {
-            return formatList(data, options);
+            return formatList(data as Array<unknown>, options);
         } else if (type === 'Set') {
-            return formatSet(data, options);
+            return formatSet(data as Set<string | number | Uint8Array>, options);
         } else if (type === 'String') {
-            if (data.length === 0 && options.convertEmptyValues) {
+            if ((data as string).length === 0 && options?.convertEmptyValues) {
                 return Converter.input(null);
             }
             return { S: data };
         } else if (type === 'Number' || type === 'NumberValue') {
-            return { N: data.toString() };
+            return { N: (data as number).toString() };
         } else if (type === 'Binary') {
-            if (data.length === 0 && options.convertEmptyValues) {
+            if ((data as Uint8Array).length === 0 && options?.convertEmptyValues) {
                 return Converter.input(null);
             }
-            // return { B: data };
-            return { B: base64FromUint8Array(data) };
+            return { B: b64FromUint8Array(data as Uint8Array) };
         } else if (type === 'Boolean') {
             return { BOOL: data };
         } else if (type === 'null') {
             return { NULL: true };
         } else if (type !== 'undefined' && type !== 'Function') {
             // this value has a custom constructor
-            return formatMap(data, options);
+            return formatMap(data as Doc, options);
         }
-
         return {};
     }
 
@@ -175,7 +210,7 @@ export class Converter {
      *    stringSet: new DynamoDBSet(['foo', 'bar', 'baz'])
      *  });
      */
-    static marshall(data: Doc, options?: Doc): Doc {
+    static marshall(data: Doc, options?: FormatInputOptions): Doc {
         return Converter.input(data, options).M;
     }
 
@@ -240,13 +275,13 @@ export class Converter {
                 //   list.push(base64ToUint8Array(values[i]));
                 // }
                 // return new DynamoDBSet(list);
-                return new DynamoDBSet(values.map(base64ToUint8Array));
+                return new DynamoDBSet(values.map(b64toUint8Array));
             } else if (type === 'S') {
                 return String(values);
             } else if (type === 'N') {
                 return convertNumber(values, options.wrapNumbers);
             } else if (type === 'B') {
-                return base64ToUint8Array(values);
+                return b64toUint8Array(values);
             } else if (type === 'BOOL') {
                 return values === 'true' || values === 'TRUE' || values === true;
             } else if (type === 'NULL') {
