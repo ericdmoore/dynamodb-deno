@@ -2,9 +2,9 @@
 
 # sync this with the vars in the `local_db_avail.sh` file
 URL = "https://s3.eu-central-1.amazonaws.com/dynamodb-local-frankfurt/dynamodb_local_latest.tar.gz"
-DIR = "./dynamodb_local_latest"
+DIR = ./dynamodb_local_latest
 
-tests:
+testing:
 	deno test --allow-run --allow-net
 
 local_tests: local_db_start wait5 tests local_db_stop
