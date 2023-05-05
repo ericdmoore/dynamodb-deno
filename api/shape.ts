@@ -1,5 +1,4 @@
-// deno-lint-ignore-file no-explicit-any no-unused-vars no-this-alias
-// import { base64FromUint8Array, base64ToUint8Array } from '../deps.ts';
+import { base64FromUint8Array, base64ToUint8Array } from '../deps.ts';
 import { Collection } from './collection.ts';
 // import { Doc } from "../types.ts"
 import {
@@ -163,7 +162,7 @@ Shape.resolve = function resolve(shape: Doc, options: Doc = {}): Doc | null {
 Shape.create = function create(
     shape: Doc,
     options: Doc = {},
-    memberName = '',
+    memberName: string = '',
 ): any {
     if (shape.isShape) {
         return shape;
@@ -228,7 +227,7 @@ function CompositeShape(this: any, shape: Doc) {
 function StructureShape(this: any, shape: Doc, options: Doc = {}) {
     const self: any = this;
     // let requiredMap: null | Doc = null;
-    const firstInit = !this.isShape;
+    const firstInit: boolean = !this.isShape;
 
     CompositeShape.apply(this, arguments as any);
 
@@ -339,7 +338,7 @@ function StructureShape(this: any, shape: Doc, options: Doc = {}) {
 
 function ListShape(this: any, shape: Doc, options: Doc = {}) {
     const self: any = this;
-    const firstInit = !this.isShape;
+    const firstInit: boolean = !this.isShape;
 
     CompositeShape.apply(this, arguments as any);
 
@@ -365,7 +364,7 @@ function ListShape(this: any, shape: Doc, options: Doc = {}) {
 }
 
 function MapShape(this: any, shape: Doc, options: Doc = {}) {
-    const firstInit = !this.isShape;
+    const firstInit: boolean = !this.isShape;
 
     CompositeShape.apply(this, arguments as any);
 
@@ -373,7 +372,7 @@ function MapShape(this: any, shape: Doc, options: Doc = {}) {
         // property(this, 'defaultValue', function (): Doc {
         //     return {};
         // });
-        property(this, 'key', Shape.create({ type: 'string' }, options));
+            property(this, 'key', Shape.create({ type: 'string' }, options));
         property(this, 'value', Shape.create({ type: 'string' }, options));
     }
 
@@ -401,13 +400,13 @@ function TimestampShape(this: any, shape: Doc) {
             case 'rest-json':
                 property(this, 'timestampFormat', 'unixTimestamp');
                 break;
-                // case 'rest-xml':
-                // case 'query':
-                // case 'ec2':
-                //     property(this, 'timestampFormat', 'iso8601');
-                //     break;
+            // case 'rest-xml':
+            // case 'query':
+            // case 'ec2':
+            //     property(this, 'timestampFormat', 'iso8601');
+            //     break;
         }
-    }
+    } 
     // else if (shape.timestampFormat) {
     //     property(this, 'timestampFormat', shape.timestampFormat);
     // } else if (self.isTimestampFormatSet && this.timestampFormat) {

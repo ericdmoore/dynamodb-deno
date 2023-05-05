@@ -6,22 +6,6 @@ For an overview of DynamoDB Local please refer to the documentation at http://do
 
 Release Notes
 -----------------------------
-2023-1-26 (1.21.0)
-* Matching Expection for Duplicate items with Web Service for batch-execute-statement operation
-* Increase max number of actions to 100
-* Upgrading Open JDK on docker to openjdk11
-
-2022-9-12 (1.20.0)
-
-* Fixed path traversal issue
-* Updated Jetty dependency to 9.4.48.v20220622
-* Added M1 support
-
-2022-7-27 (1.19.0)
-
- * Updated  IonSQLSandbox dependency to version 6.x
- * Updated  KotlinStdlib dependency to version 1.6.x
-
 2022-1-10 (1.18.0)
 
  * Updated log4j-core dependency to version 2.17.1.
@@ -39,7 +23,6 @@ Release Notes
 
  * Update the AWS SDK dependency to AWS SDK for Java 1.12.x
  * Update License.txt file
- * Deprecated Javascript Web Shell
 
 2021-05-03 (1.16.0)
 

@@ -1,6 +1,6 @@
 import { ClientConfig } from '../mod.ts';
 import { kdf } from './aws_signature_v4.ts';
-import { date, Doc } from '../utils/index.ts';
+import { date, Doc } from '../util.ts';
 
 /** Service name. */
 const SERVICE = 'dynamodb';
@@ -12,13 +12,14 @@ export function createCache(conf: ClientConfig): Doc {
         _signingKey: null,
         _accessKeyId: '',
         _sessionToken: '',
+        // deno-lint-ignore require-await
         async refresh(): Promise<void> {
             const dateStamp = date.format(new Date(), 'dateStamp') as string;
             const credentials = typeof conf.credentials === 'function'
                 ? conf.credentials()
                 : conf.credentials;
 
-            this._signingKey = await kdf(
+            this._signingKey = kdf(
                 credentials.secretAccessKey,
                 dateStamp,
                 conf.region!,

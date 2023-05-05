@@ -17,13 +17,16 @@
     //   }
     // },
     "fmt": {
-        "include": ["./api/", "./client/", "./utils", "./mod.ts", "./deps.ts", "./tests/"],
-        "exclude": ["./coverage/"],
-        // "options": { },
-        "useTabs": false,
-        "lineWidth": 100,
-        "indentWidth": 4,
-        "singleQuote": true,
-        "proseWrap": "preserve"
+        "files": {
+            //     "include": ["api/", "client/", "./util.ts", "./mod.ts"],
+            "exclude": [".coverage/"]
+        },
+        "options": {
+            "useTabs": false,
+            "lineWidth": 100,
+            "indentWidth": 4,
+            "singleQuote": true,
+            "proseWrap": "preserve"
+        }
     }
 }

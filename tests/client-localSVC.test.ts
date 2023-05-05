@@ -8,15 +8,17 @@
  * the test suite needs `Deno.Run` permissions
  */
 
+console.log('preclient import');
+
 import {
     assert,
     assertEquals,
-    assertThrows,
-} from 'https://deno.land/std@0.181.0/testing/asserts.ts';
+    assertThrowsAsync,
+} from 'https://deno.land/std@0.34.0/testing/asserts.ts';
 
 import { type ClientConfig, createClient, type DynamoDBClient } from '../mod.ts';
 import { deriveConfig } from '../client/derive_config.ts';
-import { Doc } from '../utils/index.ts';
+import { Doc } from '../util.ts';
 
 const conf: ClientConfig = {
     credentials: {
@@ -37,15 +39,12 @@ const exec = async (cmd: string) => {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
-    // @TODO - move to Deno Command
-    // const cmdExecutor = new Deno.Command(cmd, {stdin:'piped', stdout:'piped'})
-    // await cmdExecutor.spawn()
-
     const p = Deno.run({
         cmd: ['bash'],
         stdin: 'piped',
         stdout: 'piped',
     });
+
     await p.stdin.write(encoder.encode(cmd));
     await p.stdin.close();
 
@@ -229,7 +228,7 @@ Deno.test('Using The Local Dynamo DB Service', async (setup) => {
             await t.step({
                 name: '8. Missing table throws a readable error',
                 async fn(): Promise<void> {
-                    await assertThrows(
+                    await assertThrowsAsync(
                         async (): Promise<void> => {
                             await dyno.scan({ TableName: 'notatable' });
                         },
