@@ -1,6 +1,6 @@
 import { ClientConfig } from '../mod.ts';
 import { kdf } from './aws_signature_v4.ts';
-import { date, Doc } from '../util.ts';
+import { date, Doc } from '../utils/index.ts';
 
 /** Service name. */
 const SERVICE = 'dynamodb';

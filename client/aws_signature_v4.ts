@@ -1,8 +1,10 @@
-import { decode, encode, hmac } from '../deps.ts';
-import { date } from '../util.ts';
+import { hmac } from '../deps.ts';
+import { date } from '../utils/index.ts';
 
 /** Some magic bytes. */
-const AWS4: Uint8Array = encode('AWS4', 'utf8');
+const enc = new TextEncoder();
+
+const AWS4: Uint8Array = enc.encode('AWS4');
 
 /** Creates a HMAC-SHA256 mac.*/
 export function awsSignatureV4(
@@ -19,12 +21,8 @@ export function kdf(
     dateStamp: Date | string,
     region: string,
     service: string,
-    keyInputEncoding?: string,
-    outputEncoding?: string,
-): string | Uint8Array {
-    if (typeof key === 'string') {
-        key = encode(key, keyInputEncoding) as Uint8Array;
-    }
+): Uint8Array {
+    const key_ = typeof key === 'string' ? enc.encode(key) : key;
 
     if (typeof dateStamp !== 'string') {
         dateStamp = date.format(dateStamp, 'dateStamp') as string;
@@ -32,10 +30,10 @@ export function kdf(
         throw new TypeError('date stamp format must be yyyymmdd');
     }
 
-    const paddedKey: Uint8Array = new Uint8Array(4 + key.byteLength);
+    const paddedKey: Uint8Array = new Uint8Array(4 + key_.byteLength);
 
     paddedKey.set(AWS4, 0);
-    paddedKey.set(key, 4);
+    paddedKey.set(key_, 4);
 
     let mac: Uint8Array = hmac(
         'sha256',
@@ -47,5 +45,5 @@ export function kdf(
     mac = hmac('sha256', mac, region, 'utf8') as Uint8Array;
     mac = hmac('sha256', mac, service, 'utf8') as Uint8Array;
     mac = hmac('sha256', mac, 'aws4_request', 'utf8') as Uint8Array;
-    return outputEncoding ? decode(mac, outputEncoding) : mac;
+    return mac;
 }

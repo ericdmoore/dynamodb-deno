@@ -1,4 +1,4 @@
-import { date, DynamoDBNumberValue, DynamoDBSet, typeOf } from '../util.ts';
+import { date, DynamoDBNumberValue, DynamoDBSet, typeOf } from '../../utils/index.ts';
 import { assertEquals, assertThrows } from 'https://deno.land/std@0.147.0/testing/asserts.ts';
 
 Deno.test('f.TypeOf - null', () => {
@@ -49,9 +49,9 @@ Deno.test('f.date ', () => {
 });
 
 Deno.test('DynamoDBSet - Throws with bad input types ', () => {
-    assertThrows(() => new DynamoDBSet([()=>{}, ()=>{}]))
+    assertThrows(() => new DynamoDBSet([() => {}, () => {}]));
 });
 
 Deno.test('DynamoDBSet - Throws with inconsistent input types ', () => {
-    assertThrows(() => new DynamoDBSet([1,'a', 2], {validate:true}))
+    assertThrows(() => new DynamoDBSet([1, 'a', 2], { validate: true }));
 });

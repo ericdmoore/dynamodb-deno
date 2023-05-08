@@ -18,7 +18,7 @@ import {
 
 import { type ClientConfig, createClient, type DynamoDBClient } from '../mod.ts';
 import { deriveConfig } from '../client/derive_config.ts';
-import { Doc } from '../util.ts';
+import { Doc } from '../utils/index.ts';
 
 const conf: ClientConfig = {
     credentials: {

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 const ANY_BUT_DIGITS = /[^\d]/g;
 const ANY_BUT_DIGITS_T = /[^\dT]/g;
 
@@ -159,7 +160,7 @@ export class DynamoDBSet {
     readonly type: string = '';
 
     /** Creates a dynamodb set. */
-    constructor(list: any[] = [], options?: {validate:boolean}) {
+    constructor(list: any[] = [], options?: { validate: boolean }) {
         this.values = [...list];
         this.type = memberTypeToSetType[typeOf(this.values[0])];
 

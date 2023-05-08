@@ -1,6 +1,6 @@
-import { encode, sha256 } from '../deps.ts';
+import { sha256 } from '../utils/hmac.ts';
 import { awsSignatureV4 } from './aws_signature_v4.ts';
-import { date, Doc } from '../util.ts';
+import { date, Doc } from '../utils/index.ts';
 import { ClientConfig } from '../mod.ts';
 
 /** Algorithm identifer. */
@@ -27,7 +27,7 @@ export async function createHeaders(
     if (refreshCredentials) {
         await conf.cache.refresh();
     }
-
+    const enc = new TextEncoder();
     const amzTarget = `DynamoDB_20120810.${op}`;
     const amzDate = date.format(conf.date || new Date(), 'amz') as string;
     const canonicalUri = conf.canonicalUri || '/';
@@ -37,21 +37,22 @@ export async function createHeaders(
         `x-amz-target:${amzTarget}\n`;
 
     const signedHeaders = 'content-type;host;x-amz-date;x-amz-target';
-    const payloadHash: string = sha256(payload, undefined, 'hex') as string;
+    const payloadHash = await sha256(payload, 'utf8', 'hex');
     const canonicalRequest = `${conf.method}\n${canonicalUri}\n\n` +
         `${canonicalHeaders}` +
         `\n${signedHeaders}` +
         `\n${payloadHash}`;
 
-    const canonicalRequestDigest = sha256(
-        canonicalRequest,
+    const canonicalRequestDigest = await sha256(
+        enc.encode(canonicalRequest),
         'utf8',
         'hex',
-    ) as string;
-    const msg: Uint8Array = encode(
-        `${ALGORITHM}\n${amzDate}\n${conf.cache.credentialScope}\n${canonicalRequestDigest}`,
-        'utf8',
     );
+
+    const msg: Uint8Array = enc.encode(
+        `${ALGORITHM}\n${amzDate}\n${conf.cache.credentialScope}\n${canonicalRequestDigest}`,
+    );
+
     const signature: string = awsSignatureV4(
         conf.cache.signingKey,
         msg,

@@ -1,10 +1,11 @@
-import { Doc, DynamoDBNumberValue, DynamoDBSet, typeOf } from '../util.ts';
+// deno-lint-ignore-file no-explicit-any
+import { Doc, DynamoDBNumberValue, DynamoDBSet, typeOf } from '../utils/index.ts';
 
-type ValidSetTypes = Set<string> | Set<number> | Set<Uint8Array>
+type ValidSetTypes = Set<string> | Set<number> | Set<Uint8Array>;
 
 interface FilterableInput {
-    type: "String" | 'Number' | 'Binary'
-    values: string[] |  number[] | Uint8Array[]
+    type: 'String' | 'Number' | 'Binary';
+    values: string[] | number[] | Uint8Array[];
 }
 
 interface FormatInputOptions {
@@ -49,7 +50,7 @@ const b64toUint8Array = (b64: string) => enc.encode(atob(b64));
 function formatList(data: any[], options?: FormatInputOptions): Doc {
     const list: Doc = { L: [] };
 
-    for (let i: number = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         list['L'].push(Converter.input(data[i], options));
     }
 
@@ -76,33 +77,34 @@ export function formatMap(data: Doc, options?: FormatInputOptions): Doc {
     return map;
 }
 
-
 /** Formats a set. */
 export function formatSet(
     data: ValidSetTypes,
     options?: FormatInputOptions,
 ): Doc {
-    const values = [...data.values()] as string[] |  number[] | Uint8Array[];
+    const values = [...data.values()] as string[] | number[] | Uint8Array[];
     const setType: 'String' | 'Number' | 'Binary' = typeof values[0] === 'string'
         ? 'String'
         : typeof values[0] === 'number'
         ? 'Number'
         : 'Binary';
 
-    if (options?.convertEmptyValues && filterEmptySetValues({type: setType, values}).length === 0) {
-            return Converter.input(null);
+    if (
+        options?.convertEmptyValues && filterEmptySetValues({ type: setType, values }).length === 0
+    ) {
+        return Converter.input(null);
     }
 
     const map: Doc = {};
     switch (setType) {
         case 'String':
-            map['SS'] = options?.convertEmptyValues 
-                ? filterEmptySetValues({type: setType, values}) 
+            map['SS'] = options?.convertEmptyValues
+                ? filterEmptySetValues({ type: setType, values })
                 : values;
             break;
         case 'Binary':
             map['BS'] = (values as Uint8Array[])
-                .filter( v => !options?.convertEmptyValues || v?.length > 0)
+                .filter((v) => !options?.convertEmptyValues || v?.length > 0)
                 .map((v) => b64FromUint8Array(v));
             break;
         case 'Number':
@@ -113,12 +115,11 @@ export function formatSet(
     return map;
 }
 
-
 /** Filters empty set values. */
 /** Filters empty set values. */
 export function filterEmptySetValues(set: FilterableInput): unknown[] {
     return set.type !== 'Number'
-        ? (set.values as (string | Uint8Array)[]).filter(e => e && e.length > 0)
+        ? (set.values as (string | Uint8Array)[]).filter((e) => e && e.length > 0)
         : set.values;
 }
 

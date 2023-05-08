@@ -1,6 +1,5 @@
-import { encode } from '../deps.ts';
 import { createHeaders, HeadersConfig } from './create_headers.ts';
-import { Doc } from '../util.ts';
+import { Doc } from '../utils/index.ts';
 
 /** Base fetch. */
 export async function baseFetch(
@@ -8,7 +7,8 @@ export async function baseFetch(
     op: string,
     params: Doc,
 ): Promise<Doc> {
-    const payload: Uint8Array = encode(JSON.stringify(params), 'utf8');
+    const enc = new TextEncoder();
+    const payload: Uint8Array = enc.encode(JSON.stringify(params));
 
     let headers: Headers = await createHeaders(
         op,

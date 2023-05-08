@@ -1,7 +1,9 @@
+// deno-lint-ignore-file no-explicit-any
+
 import { baseFetch } from './base_fetch.ts';
 import { API } from '../api/mod.ts';
 import { Translator } from './translator.ts';
-import { Doc } from '../util.ts';
+import { Doc } from '../utils/index.ts';
 
 // ts strict food
 const _Translator: any = Translator;
@@ -57,7 +59,7 @@ export async function baseOp(
 
     if (rawResult.LastEvaluatedKey && iteratePages) {
         let lastEvaluatedKey: any = rawResult.LastEvaluatedKey;
-        let first: boolean = true;
+        let first = true;
 
         return {
             [Symbol.asyncIterator](): AsyncIterableIterator<Doc> {
@@ -79,10 +81,10 @@ export async function baseOp(
                     //         done: false,
                     //     };
                     // } else {
-                        return {
-                            value: translator.translateOutput(rawResult, outputShape),
-                            done: false,
-                        };
+                    return {
+                        value: translator.translateOutput(rawResult, outputShape),
+                        done: false,
+                    };
                     // }
                 } else {
                     params.ExclusiveStartKey = lastEvaluatedKey;

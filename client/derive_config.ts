@@ -1,5 +1,5 @@
 import { ClientConfig } from '../mod.ts';
-import { Doc } from '../util.ts';
+import { Doc } from '../utils/index.ts';
 import { createCache } from './create_cache.ts';
 
 /** Derives host and endpoint. */
