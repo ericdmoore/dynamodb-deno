@@ -52,6 +52,7 @@ export const hash = async (
 
 export const sha256 = async (
     msg: Uint8Array,
+    // deno-lint-ignore no-unused-vars
     inEnc: EncodingFormatOptions = 'utf8',
     outEnc: EncodingFormatOptions,
 ) => {
